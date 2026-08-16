@@ -1,6 +1,6 @@
 # Acme On-Premise → Azure Migration (Simulación)
 
-Simulación end-to-end de una migración de datos on-premise hacia Azure, construida como proyecto de portafolio para procesos de entrevista como **Data Engineer**. "Acme" es un alias genérico; el proyecto no representa ninguna infraestructura real de producción.
+Simulación end-to-end de una migración de datos on-premise hacia Azure, . "Acme" es un alias genérico; el proyecto no representa ninguna infraestructura real de producción.
 
 ## Arquitectura
 
