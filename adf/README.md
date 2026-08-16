@@ -1,6 +1,8 @@
-# Exportar recursos de ADF a este repo
+# Recursos de ADF
 
-Estos JSON no se pueden generar automáticamente desde aquí (requieren acceso a tu suscripción de Azure). Pasos para exportarlos manualmente desde `adf-acmesim-dev`:
+Los recursos ya están exportados y saneados en este repo (linked services con `encryptedCredential` reemplazado por un placeholder — ese valor es una credencial encriptada local al Integration Runtime y no es portable ni reutilizable fuera de esa máquina/tenant, pero se redactó igual por buena práctica).
+
+Si necesitas re-exportarlos tras un cambio, pasos manuales desde `adf-acmesim-dev`:
 
 ## Opción A — Desde el portal de ADF Studio (recomendado, más simple)
 

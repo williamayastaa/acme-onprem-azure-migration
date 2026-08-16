@@ -1,0 +1,37 @@
+{
+    "name": "ds_sqlserver_customers",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "ls_sqlserver_onprem",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "SqlServerTable",
+        "schema": [
+            {
+                "name": "id",
+                "type": "int",
+                "precision": 10
+            },
+            {
+                "name": "full_name",
+                "type": "varchar"
+            },
+            {
+                "name": "registration_date",
+                "type": "date"
+            },
+            {
+                "name": "amount",
+                "type": "decimal",
+                "precision": 10,
+                "scale": 2
+            }
+        ],
+        "typeProperties": {
+            "schema": "dbo",
+            "table": "customers"
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

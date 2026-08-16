@@ -1,0 +1,21 @@
+{
+    "name": "ls_sqlserver_onprem",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "annotations": [],
+        "type": "SqlServer",
+        "typeProperties": {
+            "server": "localhost,1433",
+            "database": "AcmeSim",
+            "encrypt": "mandatory",
+            "trustServerCertificate": true,
+            "authenticationType": "SQL",
+            "userName": "SA",
+            "encryptedCredential": "<REDACTED - credencial encriptada local al Integration Runtime, no portable. Se regenera al reconfigurar el Linked Service en ADF Studio>"
+        },
+        "connectVia": {
+            "referenceName": "shir-acmesim-dev",
+            "type": "IntegrationRuntimeReference"
+        }
+    }
+}

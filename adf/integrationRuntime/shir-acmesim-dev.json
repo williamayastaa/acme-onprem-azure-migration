@@ -1,0 +1,6 @@
+{
+    "name": "shir-acmesim-dev",
+    "properties": {
+        "type": "SelfHosted"
+    }
+}

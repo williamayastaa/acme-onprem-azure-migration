@@ -1,0 +1,12 @@
+{
+    "name": "ls_adls_gen2",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "annotations": [],
+        "type": "AzureBlobFS",
+        "typeProperties": {
+            "url": "https://stacmesimdev.dfs.core.windows.net/",
+            "encryptedCredential": "<REDACTED - credencial encriptada local al Integration Runtime, no portable. Se regenera al reconfigurar el Linked Service en ADF Studio>"
+        }
+    }
+}
