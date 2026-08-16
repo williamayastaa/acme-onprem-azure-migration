@@ -1,6 +1,6 @@
 # Acme On-Premise → Azure Migration (Simulación)
 
-Simulación end-to-end de una migración de datos on-premise hacia Azure, construida como proyecto de portafolio para procesos de entrevista como **Data Engineer**. "Acme" es un alias genérico; el proyecto no representa ninguna infraestructura real de producción.
+Simulación end-to-end de una migración de datos on-premise hacia Azure. "Acme" es un alias genérico; el proyecto no representa ninguna infraestructura real de producción.
 
 ## Arquitectura
 
@@ -23,19 +23,12 @@ flowchart LR
         end
     end
 
-    subgraph Databricks["Databricks (repo separado)"]
-        DLT[Delta Live Tables<br/>Medallion + Unity Catalog]
-    end
-
     SQL -->|Copy Data activity| IR
     IR --> ADF
     ADF -->|pl_sqlserver_to_bronze| Bronze
-    Bronze -.pendiente.-> DLT
-    DLT -.pendiente.-> Silver
-    DLT -.pendiente.-> Gold
 ```
 
-**Estado actual:** el flujo on-premise → Bronze está completo y probado. La transformación Bronze → Silver → Gold vive en un repo aparte de Databricks (DABs + Delta Live Tables + Unity Catalog) y su integración con el `bronze` de este proyecto está pendiente de documentar (ver [Roadmap](#roadmap)).
+El pipeline `pl_sqlserver_to_bronze` copia la tabla `customers` desde SQL Server on-premise hacia el container `bronze` en formato Parquet.
 
 ## Stack
 
@@ -46,7 +39,6 @@ flowchart LR
 | Integración | Self-Hosted Integration Runtime (SHIR) |
 | Orquestación / ingesta | Azure Data Factory |
 | Almacenamiento | Azure Data Lake Storage Gen2 (containers `bronze` / `silver` / `gold`) |
-| Transformación (repo aparte) | Databricks · Delta Live Tables · Unity Catalog |
 
 ## Convenciones
 
@@ -70,7 +62,8 @@ acme-onprem-azure-migration/
 ├── adf/
 │   ├── linkedServices/
 │   ├── datasets/
-│   └── pipelines/
+│   ├── pipelines/
+│   └── integrationRuntime/
 └── docs/
     └── troubleshooting.md
 ```
@@ -93,22 +86,6 @@ python generate_fake_data.py
 ```
 
 **Nota operativa:** cada reinicio de Windows detiene Docker Desktop y el servicio "Integration Runtime Service"; hay que reactivarlos manualmente (o configurar inicio automático) antes de volver a correr el pipeline.
-
-## Caso para entrevista (formato STAR)
-
-**Situación:** En un proceso de entrevista para Data Engineer Jr, dos stakeholders del mismo proceso pedían perfiles distintos: RH buscaba experiencia con Azure Data Factory, Self-Hosted Integration Runtime y T-SQL sobre fuentes on-premise; el arquitecto técnico buscaba exposición a Python/Scala, Databricks y arquitectura Lakehouse.
-
-**Tarea:** No contaba con un proyecto que cubriera el flujo on-premise → Azure con IR self-hosted, así que construí uno desde cero como pieza de portafolio, simulando un origen on-premise real con Docker.
-
-**Acción:** Levanté un SQL Server on-premise en contenedor, generé datos ficticios con Faker, instalé y configuré un Self-Hosted Integration Runtime, y construí un pipeline en Azure Data Factory (Linked Services, Datasets, Copy Data activity) para mover los datos hacia ADLS Gen2 en capa Bronze siguiendo arquitectura Medallion. En el camino diagnostiqué y resolví un error de compatibilidad entre el SHIR y versiones modernas de Java (ver [docs/troubleshooting.md](docs/troubleshooting.md)).
-
-**Resultado:** Pipeline funcional end-to-end, documentado y reproducible, que cubre exactamente el gap técnico que RH había señalado, y que se conecta conceptualmente con un segundo proyecto propio de Databricks/Lakehouse que cubre el gap señalado por el arquitecto.
-
-## Roadmap
-
-- [ ] **Fase 5 — Databricks:** documentar cómo el repo de Databricks (DABs, Delta Live Tables, Unity Catalog) lee desde el container `bronze` generado aquí.
-- [ ] **Fase 6 — Seguridad:** migrar de Account Key a Service Principal + Azure Key Vault (`kv-acmesim-dev`) + RBAC (`Storage Blob Data Contributor`) en los Linked Services de ADF.
-- [ ] Exposición práctica mínima a Scala.
 
 ## Troubleshooting
 
