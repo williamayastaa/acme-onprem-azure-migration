@@ -47,6 +47,10 @@ El pipeline `pl_sqlserver_to_bronze` copia la tabla `customers` desde SQL Server
 - SQL en `snake_case`, nombres en inglés para tablas/columnas
 - ADF: Pipelines `pl_<origen>_to_<destino>`, Datasets `ds_<sistema>_<entidad>`, Linked Services `ls_<sistema>`
 
+## Seguridad
+
+La autenticación hacia ADLS Gen2 usa un Service Principal con permisos acotados (rol Storage Blob Data Contributor, scope limitado al Storage Account), con su credencial almacenada en Azure Key Vault — sin secretos expuestos en la configuración de ADF.
+
 ## Estructura del repo
 
 ```
