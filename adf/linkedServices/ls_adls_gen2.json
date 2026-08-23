@@ -6,7 +6,17 @@
         "type": "AzureBlobFS",
         "typeProperties": {
             "url": "https://stacmesimdev.dfs.core.windows.net/",
-            "encryptedCredential": "<REDACTED - credencial encriptada local al Integration Runtime, no portable. Se regenera al reconfigurar el Linked Service en ADF Studio>"
+            "tenant": "38086224-ca5c-47f5-a503-8234d9dc630a",
+            "servicePrincipalId": "dd9a5c8d-8365-46e2-8008-3cbdf7a6241b",
+            "servicePrincipalCredentialType": "ServicePrincipalKey",
+            "servicePrincipalCredential": {
+                "type": "AzureKeyVaultSecret",
+                "store": {
+                    "referenceName": "ls_keyvault_acmesim",
+                    "type": "LinkedServiceReference"
+                },
+                "secretName": "sp-client-secret"
+            }
         }
     }
 }
